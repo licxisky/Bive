@@ -1,7 +1,7 @@
-package com.lichaoxi.bive.bive.service;
+package com.lichaoxi.bive.service;
 
-import com.lichaoxi.bive.bive.entity.User;
-import com.lichaoxi.bive.bive.repository.UserRepository;
+import com.lichaoxi.bive.entity.User;
+import com.lichaoxi.bive.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

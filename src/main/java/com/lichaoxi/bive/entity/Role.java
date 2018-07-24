@@ -1,4 +1,4 @@
-package com.lichaoxi.bive.bive.entity;
+package com.lichaoxi.bive.entity;
 
 import lombok.Data;
 

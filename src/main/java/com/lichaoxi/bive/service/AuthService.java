@@ -1,11 +1,11 @@
-package com.lichaoxi.bive.bive.service;
+package com.lichaoxi.bive.service;
 
-import com.lichaoxi.bive.bive.entity.User;
-import com.lichaoxi.bive.bive.exception.UserExistException;
-import com.lichaoxi.bive.bive.exception.UserNotFoundException;
-import com.lichaoxi.bive.bive.repository.UserRepository;
-import com.lichaoxi.bive.bive.security.CustomUserDetails;
-import com.lichaoxi.bive.bive.utils.JwtUtils;
+import com.lichaoxi.bive.entity.User;
+import com.lichaoxi.bive.exception.UserExistException;
+import com.lichaoxi.bive.exception.UserNotFoundException;
+import com.lichaoxi.bive.repository.UserRepository;
+import com.lichaoxi.bive.security.CustomUserDetails;
+import com.lichaoxi.bive.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,6 +53,6 @@ public class AuthService {
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
         String token = JwtUtils.generateToken(customUserDetails);
 
-        return token;
+        return "Bearer " + token;
     }
 }

@@ -1,4 +1,4 @@
-package com.lichaoxi.bive.bive;
+package com.lichaoxi.bive;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

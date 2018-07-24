@@ -1,4 +1,4 @@
-package com.lichaoxi.bive.bive.exception;
+package com.lichaoxi.bive.exception;
 
 public class UserExistException extends Exception {
 

@@ -1,4 +1,4 @@
-package com.lichaoxi.bive.bive.jwt;
+package com.lichaoxi.bive.jwt;
 
 import lombok.Data;
 

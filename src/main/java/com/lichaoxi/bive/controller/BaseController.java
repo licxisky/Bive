@@ -1,4 +1,4 @@
-package com.lichaoxi.bive.bive.controller;
+package com.lichaoxi.bive.controller;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,11 +1,13 @@
-package com.lichaoxi.bive.bive.security;
+package com.lichaoxi.bive.security;
 
-import com.lichaoxi.bive.bive.entity.User;
-import com.lichaoxi.bive.bive.repository.UserRepository;
+import com.lichaoxi.bive.entity.User;
+import com.lichaoxi.bive.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired

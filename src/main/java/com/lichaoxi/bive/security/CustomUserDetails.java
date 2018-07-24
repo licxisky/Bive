@@ -1,7 +1,7 @@
-package com.lichaoxi.bive.bive.security;
+package com.lichaoxi.bive.security;
 
-import com.lichaoxi.bive.bive.entity.Role;
-import com.lichaoxi.bive.bive.entity.User;
+import com.lichaoxi.bive.entity.Role;
+import com.lichaoxi.bive.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

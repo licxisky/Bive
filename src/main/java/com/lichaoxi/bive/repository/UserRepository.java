@@ -1,6 +1,6 @@
-package com.lichaoxi.bive.bive.repository;
+package com.lichaoxi.bive.repository;
 
-import com.lichaoxi.bive.bive.entity.User;
+import com.lichaoxi.bive.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,3 +10,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
     Boolean existsByName(String name);
 }
+ 

@@ -1,6 +1,6 @@
-package com.lichaoxi.bive.bive.utils;
+package com.lichaoxi.bive.utils;
 
-import com.lichaoxi.bive.bive.security.CustomUserDetails;
+import com.lichaoxi.bive.security.CustomUserDetails;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 

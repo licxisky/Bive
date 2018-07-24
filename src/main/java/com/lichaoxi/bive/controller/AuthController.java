@@ -1,10 +1,11 @@
-package com.lichaoxi.bive.bive.controller;
+package com.lichaoxi.bive.controller;
 
-import com.lichaoxi.bive.bive.entity.User;
-import com.lichaoxi.bive.bive.exception.UserExistException;
-import com.lichaoxi.bive.bive.exception.UserNotFoundException;
-import com.lichaoxi.bive.bive.jwt.JWTAuthenticationResponse;
-import com.lichaoxi.bive.bive.service.AuthService;
+import com.lichaoxi.bive.entity.User;
+import com.lichaoxi.bive.exception.UserExistException;
+import com.lichaoxi.bive.exception.UserNotFoundException;
+import com.lichaoxi.bive.jwt.JWTAuthenticationResponse;
+import com.lichaoxi.bive.repository.UserRepository;
+import com.lichaoxi.bive.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,9 @@ public class AuthController extends BaseController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -30,4 +34,6 @@ public class AuthController extends BaseController {
         String token = authService.login(user);
         return ResponseEntity.ok(new JWTAuthenticationResponse(token));
     }
+
+
 }
