@@ -1,8 +1,8 @@
 package com.lichaoxi.bive.controller;
 
 import com.lichaoxi.bive.entity.User;
-import com.lichaoxi.bive.exception.UserExistException;
-import com.lichaoxi.bive.exception.UserNotFoundException;
+import com.lichaoxi.bive.exception.UserIsExistException;
+import com.lichaoxi.bive.exception.UserNotExistException;
 import com.lichaoxi.bive.jwt.JWTAuthenticationResponse;
 import com.lichaoxi.bive.repository.UserRepository;
 import com.lichaoxi.bive.service.AuthService;
@@ -25,12 +25,12 @@ public class AuthController extends BaseController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/register")
-    public User register(User user) throws UserExistException {
+    public User register(User user) throws UserIsExistException {
         return authService.register(user);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(User user) throws UserNotFoundException {
+    public ResponseEntity<?> login(User user) throws UserNotExistException {
         String token = authService.login(user);
         return ResponseEntity.ok(new JWTAuthenticationResponse(token));
     }
