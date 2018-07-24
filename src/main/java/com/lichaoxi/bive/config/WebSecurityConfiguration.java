@@ -1,8 +1,11 @@
-package com.lichaoxi.bive.security;
+package com.lichaoxi.bive.config;
 
 import com.lichaoxi.bive.jwt.JWTAuthenticationFilter;
+import com.lichaoxi.bive.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,6 +23,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserRepository userRepository;
+
     private UserDetailsService userDetailsService;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -32,14 +38,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
                 .csrf().disable()
+
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
                 .authorizeRequests()
-                .antMatchers("/auth/*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+
+                .antMatchers("/auth/**").permitAll()
+
+                .anyRequest().authenticated().and()
+
+                .addFilterBefore(new JWTAuthenticationFilter(userRepository), UsernamePasswordAuthenticationFilter.class)
         ;
     }
 

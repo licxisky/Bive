@@ -25,10 +25,6 @@ public class UserController extends BaseController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping({"", "/", "/index"})
     public String index() {
-        CustomUserDetails customUserDetails = securityUtils.getCurrentUser();
-
-        System.out.println(SecurityContextHolder.getContext().getAuthentication());
-        System.out.println(customUserDetails.getAuthorities());
         return "Hello, World!";
     }
 

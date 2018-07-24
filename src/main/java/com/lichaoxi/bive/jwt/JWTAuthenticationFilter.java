@@ -1,10 +1,15 @@
 package com.lichaoxi.bive.jwt;
 
+import com.lichaoxi.bive.entity.User;
+import com.lichaoxi.bive.repository.UserRepository;
 import com.lichaoxi.bive.security.CustomUserDetails;
 import com.lichaoxi.bive.security.CustomUserDetailsService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -16,12 +21,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@SuppressWarnings("SpringJavaAutowiringInspection")
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private UserRepository userRepository;
+
+    public JWTAuthenticationFilter(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -32,9 +39,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = getAuthentication(request);
-        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        SecurityContextHolder.getContext().setAuthentication((usernamePasswordAuthenticationToken));
+
         chain.doFilter(request, response);
     }
 
@@ -49,8 +56,14 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     .getBody()
                     .getSubject();
 
+            User user = userRepository.findByName(username);
+            CustomUserDetails customUserDetails = new CustomUserDetails(user);
+
+            System.out.println(user);
+            System.out.println(customUserDetails.getAuthorities());
+
             if (username != null) {
-                return new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>());
+                return new UsernamePasswordAuthenticationToken(customUserDetails.getUsername(), null, customUserDetails.getAuthorities());
             }
             return null;
         }
