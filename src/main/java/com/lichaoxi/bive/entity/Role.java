@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
@@ -16,7 +16,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
 
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "roles")
@@ -24,4 +24,5 @@ public class Role {
 
     @ManyToMany(cascade = CascadeType.REFRESH)
     private List<Permission> permissions;
+
 }
