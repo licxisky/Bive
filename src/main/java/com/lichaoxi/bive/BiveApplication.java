@@ -1,7 +1,12 @@
 package com.lichaoxi.bive;
 
+import com.lichaoxi.bive.entity.Role;
+import com.lichaoxi.bive.entity.User;
+import com.lichaoxi.bive.repository.RoleRepository;
+import com.lichaoxi.bive.repository.UserRepository;
 import com.lichaoxi.bive.security.CustomUserDetailsService;
 import com.lichaoxi.bive.utils.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +20,8 @@ public class BiveApplication {
 
 
         SpringApplication.run(BiveApplication.class, args);
+
+
     }
 
     @Bean

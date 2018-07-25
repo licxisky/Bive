@@ -6,6 +6,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,9 +21,9 @@ public class Role {
     private String name;
 
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "roles")
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.REFRESH)
-    private List<Permission> permissions;
+    private List<Permission> permissions = new ArrayList<>();
 
 }
