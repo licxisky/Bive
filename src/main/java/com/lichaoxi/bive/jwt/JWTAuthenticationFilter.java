@@ -59,9 +59,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             User user = userRepository.findByName(username);
             CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
-            System.out.println(user);
-            System.out.println(customUserDetails.getAuthorities());
-
             if (username != null) {
                 return new UsernamePasswordAuthenticationToken(customUserDetails.getUsername(), null, customUserDetails.getAuthorities());
             }

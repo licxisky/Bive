@@ -1,30 +1,26 @@
 package com.lichaoxi.bive.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
-@JsonIgnoreProperties(value = {"password"})
-@ToString(exclude = {"password"})
-public class User {
+@JsonIgnoreProperties(value = {"roles"})
+@ToString(exclude = {"roles"})
+public class Permission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
-    private String email;
-    private String password;
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = "permissions")
     private List<Role> roles;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Post> posts;
-
 }
