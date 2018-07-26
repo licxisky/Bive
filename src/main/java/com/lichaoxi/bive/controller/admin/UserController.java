@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin/user")
-
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController extends BaseController {
 
     @Autowired
@@ -22,7 +22,6 @@ public class UserController extends BaseController {
     @Autowired
     private SecurityUtils securityUtils;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping({"", "/", "/index"})
     public String index() {
         return "Hello, World!";

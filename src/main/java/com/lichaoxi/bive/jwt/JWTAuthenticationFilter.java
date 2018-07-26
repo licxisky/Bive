@@ -24,10 +24,10 @@ import java.util.ArrayList;
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    private UserRepository userRepository;
+    private CustomUserDetailsService customUserDetailsService;
 
-    public JWTAuthenticationFilter(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public JWTAuthenticationFilter(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Override
@@ -56,8 +56,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     .getBody()
                     .getSubject();
 
-            User user = userRepository.findByName(username);
-            CustomUserDetails customUserDetails = new CustomUserDetails(user);
+            CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(username);
 
             if (username != null) {
                 return new UsernamePasswordAuthenticationToken(customUserDetails.getUsername(), null, customUserDetails.getAuthorities());

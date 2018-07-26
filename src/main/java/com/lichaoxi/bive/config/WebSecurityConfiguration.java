@@ -2,6 +2,7 @@ package com.lichaoxi.bive.config;
 
 import com.lichaoxi.bive.jwt.JWTAuthenticationFilter;
 import com.lichaoxi.bive.repository.UserRepository;
+import com.lichaoxi.bive.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomUserDetailsService customUserDetailsService;
 
     private UserDetailsService userDetailsService;
 
@@ -38,18 +39,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
                 .csrf().disable()
-
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-
                 .authorizeRequests()
-
                 .antMatchers("/auth/**").permitAll()
-
                 .anyRequest().authenticated().and()
-
-                .addFilterBefore(new JWTAuthenticationFilter(userRepository), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthenticationFilter(customUserDetailsService), UsernamePasswordAuthenticationFilter.class)
         ;
     }
 

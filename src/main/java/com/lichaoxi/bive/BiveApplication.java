@@ -38,4 +38,9 @@ public class BiveApplication {
     public SecurityUtils securityUtils() {
         return new SecurityUtils();
     }
+
+    @Bean
+    public CustomUserDetailsService customUserDetailsService() {
+        return new CustomUserDetailsService();
+    }
 }
