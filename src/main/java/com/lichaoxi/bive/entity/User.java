@@ -1,5 +1,6 @@
 package com.lichaoxi.bive.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.ToString;
@@ -15,8 +16,8 @@ import java.util.List;
 
 @Data
 @Entity
-@JsonIgnoreProperties(value = {"password"})
-@ToString(exclude = {"password"})
+@JsonIgnoreProperties(value = {"password", "hibernateLazyInitializer", "handler"})
+@ToString(exclude = {"password", "hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id

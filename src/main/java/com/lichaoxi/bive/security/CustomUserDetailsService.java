@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -16,7 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userRepository.findByName(s);
         if(user == null) {
-            throw new UsernameNotFoundException(String.format("用户名为 " + s + " 的用户不存在"));
+            throw new UsernameNotFoundException(String.format("User: " + s + " not found"));
         } else {
             return new CustomUserDetails(user);
         }

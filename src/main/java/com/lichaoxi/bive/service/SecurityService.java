@@ -1,20 +1,22 @@
-package com.lichaoxi.bive.utils;
+package com.lichaoxi.bive.service;
 
 import com.lichaoxi.bive.entity.User;
 import com.lichaoxi.bive.repository.UserRepository;
 import com.lichaoxi.bive.security.CustomUserDetails;
+import com.lichaoxi.bive.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
-public class SecurityUtils {
+@Service
+public class SecurityService {
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomUserDetailsService customUserDetailsService;
 
     public CustomUserDetails getCurrentUser() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findByName(username);
-        return new CustomUserDetails(user);
+        return customUserDetailsService.loadUserByUsername(username);
     }
 
 }

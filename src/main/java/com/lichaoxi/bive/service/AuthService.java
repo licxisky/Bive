@@ -3,9 +3,12 @@ package com.lichaoxi.bive.service;
 import com.lichaoxi.bive.entity.User;
 import com.lichaoxi.bive.exception.UserIsExistException;
 import com.lichaoxi.bive.exception.UserNotExistException;
+import com.lichaoxi.bive.exception.UsernameOrPasswordErrorException;
 import com.lichaoxi.bive.repository.UserRepository;
 import com.lichaoxi.bive.security.CustomUserDetails;
+import com.lichaoxi.bive.security.CustomUserDetailsService;
 import com.lichaoxi.bive.utils.JwtUtils;
+import com.lichaoxi.bive.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,41 +19,38 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private UserService userService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CustomUserDetailsService customUserDetailsService;
 
     public User register(User user) throws UserIsExistException {
         String name = user.getName();
-        if(userRepository.existsByName(name)) {
+        if(userService.existsByName(name)) {
             throw new UserIsExistException("user has exist");
         }
 
-        String password = user.getPassword();
-        user.setPassword(bCryptPasswordEncoder.encode(password));
+        UserUtils.bcrypt(user);
 
-        userRepository.save(user);
+        userService.create(user);
 
         return user;
     }
 
-    public String login(User user) throws UserNotExistException {
-        String username = user.getName();
-        String password = user.getPassword();
+    public String login(User user) throws UserNotExistException, UsernameOrPasswordErrorException {
 
-        if(!userRepository.existsByName(username)) {
-            throw new UserNotExistException("user not found!");
+        String username = user.getName();
+
+        if(!userService.existsByName(username)) {
+            throw new UserNotExistException("用户不存在");
         }
 
-        user = userRepository.findByName(username);
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
+        CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(username);
+
+        if(!UserUtils.matches(user.getPassword(), customUserDetails.getPassword())) {
+            throw new UsernameOrPasswordErrorException("用户名或密码错误！");
+        }
+
         String token = JwtUtils.generateToken(customUserDetails);
 
         return "Bearer " + token;

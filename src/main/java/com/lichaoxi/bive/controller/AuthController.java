@@ -4,6 +4,7 @@ import com.lichaoxi.bive.entity.Role;
 import com.lichaoxi.bive.entity.User;
 import com.lichaoxi.bive.exception.UserIsExistException;
 import com.lichaoxi.bive.exception.UserNotExistException;
+import com.lichaoxi.bive.exception.UsernameOrPasswordErrorException;
 import com.lichaoxi.bive.jwt.JWTAuthenticationResponse;
 import com.lichaoxi.bive.repository.RoleRepository;
 import com.lichaoxi.bive.repository.UserRepository;
@@ -57,7 +58,7 @@ public class AuthController extends BaseController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(User user) throws UserNotExistException {
+    public ResponseEntity<?> login(User user) throws UserNotExistException, UsernameOrPasswordErrorException {
         String token = authService.login(user);
         return ResponseEntity.ok(new JWTAuthenticationResponse(token));
     }

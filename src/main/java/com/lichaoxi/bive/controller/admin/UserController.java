@@ -1,15 +1,12 @@
 package com.lichaoxi.bive.controller.admin;
 
 import com.lichaoxi.bive.controller.BaseController;
-import com.lichaoxi.bive.security.CustomUserDetails;
+import com.lichaoxi.bive.entity.User;
 import com.lichaoxi.bive.service.UserService;
-import com.lichaoxi.bive.utils.SecurityUtils;
+import com.lichaoxi.bive.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/user")
@@ -19,12 +16,24 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private SecurityUtils securityUtils;
+    @GetMapping({"/{id}"})
+    public User show(@PathVariable Long id) {
+        return userService.findById(id);
+    }
 
-    @GetMapping({"", "/", "/index"})
-    public String index() {
-        return "Hello, World!";
+    @PostMapping("")
+    public User store(User user) {
+        return userService.create(user);
+    }
+
+    @PutMapping("")
+    public User update(User user) {
+        return userService.update(UserUtils.bcrypt(user));
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        userService.delete(id);
     }
 
 }

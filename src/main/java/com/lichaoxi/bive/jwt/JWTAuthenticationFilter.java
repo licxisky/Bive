@@ -26,6 +26,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private CustomUserDetailsService customUserDetailsService;
 
+    //此处通过传递 CustomUserDetailsService 解决 filter 中无法使用 @Autowired 注入的问题
     public JWTAuthenticationFilter(CustomUserDetailsService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
     }

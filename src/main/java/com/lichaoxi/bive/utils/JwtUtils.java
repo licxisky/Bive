@@ -10,9 +10,9 @@ public class JwtUtils {
 
     public static String generateToken(CustomUserDetails customUserDetails) {
         return Jwts.builder()
-                .setSubject(customUserDetails.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
-                .signWith(SignatureAlgorithm.HS512, "MyJwtSecret")
-                .compact();
+            .setSubject(customUserDetails.getUsername())
+            .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
+            .signWith(SignatureAlgorithm.HS512, "MyJwtSecret")
+            .compact();
     }
 }
