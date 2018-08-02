@@ -52,10 +52,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         if (token != null) {
             // parse the token.
             String username = Jwts.parser()
-                    .setSigningKey("MyJwtSecret")
-                    .parseClaimsJws(token.replace("Bearer ", ""))
-                    .getBody()
-                    .getSubject();
+                .setSigningKey("MyJwtSecret")
+                .parseClaimsJws(token.replace("Bearer ", ""))
+                .getBody()
+                .getSubject();
 
             CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(username);
 

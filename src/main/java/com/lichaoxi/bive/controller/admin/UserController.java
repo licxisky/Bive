@@ -17,22 +17,22 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @GetMapping({"/{id}"})
-    public User show(@PathVariable Long id) {
+    public User getUser(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     @PostMapping("")
-    public User store(User user) {
+    public User createUser(User user) {
         return userService.create(user);
     }
 
     @PutMapping("")
-    public User update(User user) {
+    public User editUser(User user) {
         return userService.update(UserUtils.bcrypt(user));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteUser(@PathVariable Long id) {
         userService.delete(id);
     }
 
